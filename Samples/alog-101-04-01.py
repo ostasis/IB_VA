@@ -281,7 +281,6 @@ def STK_order(symbol):
     return contract
 
 
-# USE below to get all positions to work out actual holding for summing values rather than using +=
 """ 
 def liquidate_all_positions():
     app.reqPositions()  # associated callback: position
