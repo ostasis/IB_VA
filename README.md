@@ -6,13 +6,16 @@ This "Sample" python script is designed to invest at set interval (note this is 
 
 ## Limitations
 
-- Using ASX stocks
+- Using ASX stocks (which you can edit)
 - No code included to easily switch between Trading Account and Paper Trading
 - No GUI
+- Both TWS and the IB Gateway require daily restarts to refresh data and therefor will require you to login (if you're only investing monthly this isn't an issue)
+- At this stage it uses [```MarketDataType 4```](https://interactivebrokers.github.io/tws-api/market_data_type.html) Delayed Frozen. Requests delayed "frozen" data for a user without market data subscriptions. It's free :)
 
 
 ## Contributing
 
+To any of the above limitations. Please fork.
 
 
 
@@ -21,9 +24,9 @@ This "Sample" python script is designed to invest at set interval (note this is 
 
 Download and install [IBKR Trading API](http://interactivebrokers.github.io/)
 
-Once installed create a new workspace in vscode from ```Python``` folder, found in ```~/IBJts/samples/Python``` and git clone this repo to there.
+Once installed create a new workspace in vscode within ```Python``` folder, found in ```~/IBJts/samples/Python``` and git clone this repo to there.
 
-Open the file ```~/IBJts/samples/Python/Samples/alog-101-04-01.py``` within vscode and follow steps below.
+Open the file ```~/IBJts/samples/Python/Samples/alog-101-04-01.py``` within vscode and follow the steps below.
 
 ** Important, start in Paper Trading and switch to delta.seconds for testing **
 Find the line below and ensure you are using Paper Trading
