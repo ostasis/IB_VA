@@ -1,0 +1,17 @@
+# Ignore everything
+*
+
+# But include these files
+!.gitignore
+!LICNESE
+
+# ...even if they are in subdirectories
+!*/
+
+# if the files to be tracked are in subdirectories
+!*Samples/alog-101-04-01.py
+
+
+
+# Ignore .gitignore in Testbed
+*Testbed/.gitignore
