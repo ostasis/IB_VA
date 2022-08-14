@@ -25,6 +25,7 @@ Once installed create a new workspace in vscode within ```Python``` folder, foun
 Open the file ```~/IBJts/samples/Python/Samples/alog-101-04-01.py``` within vscode and follow the steps below.
 
 ** Important, start in Paper Trading and switch to delta.seconds for testing **
+
 Find the line below and ensure you are using Paper Trading
 
 ```app.connect("127.0.0.1", 7497, 1)  # 7496 Trading Account & 7497 Paper Account``` 
