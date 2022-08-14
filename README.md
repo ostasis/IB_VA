@@ -12,13 +12,9 @@ This "Sample" python script is designed to invest at set interval (note this is 
 - Both TWS and the IB Gateway require daily restarts to refresh data and therefor will require you to login (if you're only investing monthly this isn't an issue)
 - At this stage it uses [```MarketDataType 4```](https://interactivebrokers.github.io/tws-api/market_data_type.html) Delayed Frozen. Requests delayed "frozen" data for a user without market data subscriptions. It's free :)
 
-
 ## Contributing
 
-To any of the above limitations. Please fork.
-
-
-
+To any of the above limitations; Perhaps a flask or django GUI. Please fork.
 
 ### Setup and install
 
