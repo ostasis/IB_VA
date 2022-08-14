@@ -35,14 +35,15 @@ class IBapi(EWrapper, EClient):
 
         """ my stuff, fingers crossed """
 
-        self.amount = 2500
+        self.amount = 2500  # amount to invest monthly
         # self.filled = False
 
         self.Cushion = 1.0
 
         if not os.path.exists("portfolio.xlsx"):
             # change symbols and weightings to your preferences below
-            # once portfolio.xlsx is generated the first time this will be ignored and changes will need to be made directly
+            # once portfolio.xlsx is generated the first time this will be ignored and changes will need to be made directly.
+            # Note this requires having index/symbol, Weight and Last Date filled in
             self.symbols = {
                 "VHY": {
                     "Weight": 0.00
@@ -312,6 +313,7 @@ def liquidate_all_positions():
         app.cancelOrder(app.nextorderId)
 """
 
+"""WARNING: MAKE SURE YOU UNDERSTAND THE RISKS AND DIFFERNCES BETWEEN 7496 Trading Account & 7497 Paper Account"""
 app = IBapi()
 app.connect("127.0.0.1", 7497, 1)  # 7496 Trading Account & 7497 Paper Account
 
@@ -322,7 +324,7 @@ api_thread = threading.Thread(target=run_loop, daemon=True)
 api_thread.start()
 
 
-def dummary():
+def summary():
     tags = [
         "AccountType",
         "NetLiquidation",
@@ -419,7 +421,7 @@ def dummyfn():
                 row_number = app.df.index.get_loc(index) + 1
 
                 if row_number == 1:
-                    dummary()
+                    summary()
                     # IB margin is about 0.2 therefore 0.5 would mean $1 for $1 investing, less than that would mean too much leverage for me ;)
                     if app.Cushion <= 0.5:  # reached Margin Cushion therefore return
                         print(
@@ -554,7 +556,7 @@ def dummyfn():
 
                 app.nextorderId += 1
 
-            # # print(f'Actual amount invested: ${app.df["Last Amount"].sum()}')
+            # print(f'Actual amount invested: ${app.df["Last Amount"].sum()}')
 
             time.sleep(11)
 
@@ -567,12 +569,15 @@ def dummyfn():
 
 timer = RepeatTimer(60, dummyfn)  # keep connection alive every 60 seconds
 timer.start()
-# dummary()
-time.sleep(6 * 60 * 60)  # 6 hoursc
+time.sleep(6 * 60 * 60)  # will run for 6 hours
 timer.cancel()
 
-
-# liquidate_all_positions()
+"""WARNING: MAKE SURE YOU UNDERSTAND THE RISKS OF UNCOMMENTING THE BELOW LINE
+        Only uncomment this line in Paper Trading mode
+        This is useful if you run out of funds whilst testing
+        Do no uncommnet in Actual Trading because as it says it will liquidate all of your positions
+        Additionally you would comment out the 4 code lines above otherwise you'll be waiting 6 hours and also uncomment the function itself"""
+####### liquidate_all_positions()
 
 time.sleep(1)
 app.disconnect()

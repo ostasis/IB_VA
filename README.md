@@ -1,5 +1,19 @@
-# IB_VA
-## Value Averaging with Interactive Brokers API
+# Value Averaging with Interactive Brokers API
+
+## Description
+
+This "Sample" python script is designed to invest at set interval (note this is done manually by running the script with IBKR TWS open) using [value averaging](https://www.investopedia.com/terms/v/value_averaging.asp)
+
+## Limitations
+
+- Using ASX stocks
+- No code included to easily switch between Trading Account and Paper Trading
+- No GUI
+
+
+## Contributing
+
+
 
 
 
@@ -7,11 +21,11 @@
 
 Download and install [IBKR Trading API](http://interactivebrokers.github.io/)
 
-Once installed create a new workspace in vscode from "Python" folder, found in ~/IBJts/samples/Python and git clone this repo to there.
+Once installed create a new workspace in vscode from ```Python``` folder, found in ```~/IBJts/samples/Python``` and git clone this repo to there.
 
 Open the file ```~/IBJts/samples/Python/Samples/alog-101-04-01.py``` within vscode and follow steps below.
 
-#### Important, start in Paper Trading and switch to delta.seconds for testing
+** Important, start in Paper Trading and switch to delta.seconds for testing **
 Find the line below and ensure you are using Paper Trading
 
 ```app.connect("127.0.0.1", 7497, 1)  # 7496 Trading Account & 7497 Paper Account``` 
