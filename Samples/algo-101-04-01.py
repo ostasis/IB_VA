@@ -563,7 +563,7 @@ def dummyfn():
 
 timer = RepeatTimer(60, dummyfn)  # keep connection alive every 60 seconds
 timer.start()
-time.sleep(20 * 60 * 60)  # will run for 24 hours
+time.sleep(20 * 60 * 60)  # will run for 20 hours
 timer.cancel()
 
 """WARNING: MAKE SURE YOU UNDERSTAND THE RISKS OF UNCOMMENTING THE BELOW LINE
