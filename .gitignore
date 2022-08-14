@@ -2,6 +2,7 @@
 *
 
 # But include these files
+!.gitattributes
 !.gitignore
 !LICNESE
 
