@@ -22,7 +22,7 @@ To any of the above limitations; Perhaps a flask or django GUI. Please fork.
 
 2. Once installed create a new workspace in vscode within ```Python``` folder, found in ```~/IBJts/samples/Python``` and git clone this repo to there.
 
-3. Open the file ```~/IBJts/samples/Python/Samples/alog-101-04-01.py``` within vscode and follow the steps below.
+3. Open the file ```~/IBJts/samples/Python/Samples/algo-101-04-01.py``` within vscode and follow the steps below.
 
 **Important, start in Paper Trading and switch to delta.seconds for testing**
 

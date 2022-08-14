@@ -315,7 +315,7 @@ def liquidate_all_positions():
 
 """WARNING: MAKE SURE YOU UNDERSTAND THE RISKS AND DIFFERNCES BETWEEN 7496 Trading Account & 7497 Paper Account"""
 app = IBapi()
-app.connect("127.0.0.1", 7497, 1)  # 7496 Trading Account & 7497 Paper Account
+app.connect("127.0.0.1", 7496, 1)  # 7496 Trading Account & 7497 Paper Account
 
 app.nextorderId = None
 
