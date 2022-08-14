@@ -2,7 +2,7 @@
 
 ## Description
 
-This "Sample" python script is designed to invest at set interval (note this is done manually by running the script with IBKR TWS open) using [value averaging](https://www.investopedia.com/terms/v/value_averaging.asp) investing strategy.
+This "Sample" python script is designed to invest at set interval using [value averaging](https://www.investopedia.com/terms/v/value_averaging.asp) investing strategy. (Note this is done manually by running the script with IBKR TWS open).
 
 ## Limitations
 
@@ -57,9 +57,7 @@ if not (
 
 7. The final step is to have TWS running in Paper Trading mode before executing ```~/IBJts/samples/Python/Samples/alog-101-04-01.py```.
 
-8. Once you're satisfied with the results try actual trading **at your own risk, see disclamer below**.
-
-DISCLAIMER OF DAMAGES. (a) TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL LICENSOR OR ITS AFFILIATES, LICENSORS, SUPPLIERS OR RESELLERS BE LIABLE TO LICENSEE UNDER ANY THEORY FOR ANY DAMAGES SUFFERED BY LICENSEE OR ANY USER OF SOFTWARE, OR FOR ANY SPECIAL, INCIDENTAL, IN- DIRECT, CONSEQUENTIAL, OR SIMILAR DAMAGES (INCLUDING, BUT NOT LIMITED TO, DAMAGES FOR LOSS OF PROFITS OR CONFIDENTIAL OR OTHER INFORMATION, FOR BUSINESS INTERRUPTION, FOR PER- SONAL INJURY, FOR LOSS OF PRIVACY, FOR FAILURE TO MEET ANY DUTY INCLUDING OF GOOD FAITH OR OF REASONABLE CARE, FOR NEGLIGENCE, AND FOR ANY OTHER PECUNIARY OR OTHER LOSS WHATSO- EVER) ARISING OUT OF THE USE OR INABILITY TO USE SOFTWARE, OR THE PROVISION OF OR FAILURE TO PROVIDE SUPPORT SERVICES, EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES, AND REGARDLESS OF THE LEGAL OR EQUITABLE THEORY (CONTRACT, TORT OR OTHERWISE) UPON WHICH THE CLAIM IS BASED.
+8. Once you're satisfied with the results try actual trading **at your own risk, see LICENCE**.
 
 
 
