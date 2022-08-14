@@ -42,10 +42,6 @@ if not (
     d1.day >= 10
     and (
         weekday == "Monday"
-        or weekday == "Tuesday"
-        or weekday == "Wednesday"
-        or weekday == "Thursday"
-        or weekday == "Friday"
     )
     and d1.hour >= 11
     and delta_check

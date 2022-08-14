@@ -404,13 +404,7 @@ def dummyfn():
 
             if not (
                 d1.day >= 10
-                and (
-                    weekday == "Monday"
-                    or weekday == "Tuesday"
-                    or weekday == "Wednesday"
-                    or weekday == "Thursday"
-                    or weekday == "Friday"
-                )
+                and (weekday == "Monday")
                 and d1.hour >= 11
                 and delta_check
                 >= 21  # >= 21 days, change to 5*60 if using delta.seconds in Paper Trading to run every 5 minutes.
@@ -569,14 +563,14 @@ def dummyfn():
 
 timer = RepeatTimer(60, dummyfn)  # keep connection alive every 60 seconds
 timer.start()
-time.sleep(6 * 60 * 60)  # will run for 6 hours
+time.sleep(20 * 60 * 60)  # will run for 24 hours
 timer.cancel()
 
 """WARNING: MAKE SURE YOU UNDERSTAND THE RISKS OF UNCOMMENTING THE BELOW LINE
         Only uncomment this line in Paper Trading mode
         This is useful if you run out of funds whilst testing
         Do no uncommnet in Actual Trading because as it says it will liquidate all of your positions
-        Additionally you would comment out the 4 code lines above otherwise you'll be waiting 6 hours and also uncomment the function itself"""
+        Additionally you would comment out the 4 code lines above otherwise you'll be waiting 20 hours and also uncomment the function itself"""
 ####### liquidate_all_positions()
 
 time.sleep(1)
