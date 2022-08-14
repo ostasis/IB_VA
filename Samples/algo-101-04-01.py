@@ -41,6 +41,8 @@ class IBapi(EWrapper, EClient):
         self.Cushion = 1.0
 
         if not os.path.exists("portfolio.xlsx"):
+            # change symbols and weightings to your preferences below
+            # once portfolio.xlsx is generated the first time this will be ignored and changes will need to be made directly
             self.symbols = {
                 "VHY": {
                     "Weight": 0.00
@@ -68,7 +70,9 @@ class IBapi(EWrapper, EClient):
                 self.df.at[index, "Last avgFillPrice"] = None
                 self.df.at[index, "Last filled"] = None
                 # self.df.at[index, "Last Amount"] = None
-                self.df.at[index, "Last Date"] = dt.now() - td(days=30)
+                self.df.at[index, "Last Date"] = dt.now() - td(
+                    days=30
+                )  # init the date to be 30 days ago
         else:
             self.df = pd.read_excel("portfolio.xlsx", index_col=0)
             # self.df.convert_dtypes(convert_floating=True)
@@ -391,8 +395,9 @@ def dummyfn():
             d0 = app.df.at[index, "Last Date"]  # app.buy_time
             d1 = current_time
             delta = d1 - d0
-            # delta_seconds = delta.seconds
-            delta_check = delta.days  # delta.days (switch to delta.seconds for testing)
+            delta_check = (
+                delta.days
+            )  # delta.seconds (switch to delta.seconds for testing in Paper Trading)
             weekday = d1.strftime("%A")
 
             if not (
@@ -405,7 +410,8 @@ def dummyfn():
                     or weekday == "Friday"
                 )
                 and d1.hour >= 11
-                and delta_check >= 21
+                and delta_check
+                >= 21  # >= 21 days, change to 5*60 if using delta.seconds in Paper Trading to run every 5 minutes.
             ):
                 continue
             else:
