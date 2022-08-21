@@ -25,13 +25,10 @@ class IBapi(EWrapper, EClient):
         self.all_positions = pd.DataFrame(
             [], columns=["Account", "Symbol", "Quantity", "Average Cost", "Sec Type"]
         )
-        # self.all_positions["Average Cost"].astype(float)
-        # self.all_positions.convert_dtypes(convert_floating=True)
 
         self.all_accounts = pd.DataFrame(
             [], columns=["reqId", "Account", "Tag", "Value", "Currency"]
         )
-        # self.all_accounts.convert_dtypes(convert_floating=True)
 
         """ my stuff, fingers crossed """
 
@@ -45,32 +42,21 @@ class IBapi(EWrapper, EClient):
             # once portfolio.xlsx is generated the first time this will be ignored and changes will need to be made directly.
             # Note this requires having index/symbol, Weight and Last Date filled in
             self.symbols = {
-                "VHY": {
-                    "Weight": 0.00
-                },  # Aims for exposure to companies with higher forecast dividends relative to other ASX-listed companies.
-                "VAS": {"Weight": 0.50},  # Tracks the return of the S&P/ASX 300 Index.
-                "VGS": {
-                    "Weight": 0.20
-                },  # Exposure to many of the world’s largest companies (ex-Australia) with net dividends reinvested.
-                "ETHI": {
-                    "Weight": 0.20
-                },  # ETHI aims to track the performance of an index (before fees and expenses) that includes a portfolio of large global stocks identified as “Climate Leaders”
-                "NDQ": {
-                    "Weight": 0.10
-                },  # NDQ aims to track the performance of the NASDAQ-100 Index (before fees and expenses)
+                "NDQ": {"Weight": 0.10},
+                "QRE": {"Weight": 0.10},
+                "VAS": {"Weight": 0.40},
+                "VGS": {"Weight": 0.20},
+                "VLC": {"Weight": 0.20},
             }
             self.df = pd.DataFrame.from_dict(self.symbols, orient="index")
             for index, row in self.df.iterrows():
 
                 self.df.at[index, "Target Amount"] = 0.0
-                # self.df.at[index, "Actual Weight"] = 0.0
                 self.df.at[index, "Actual Amount"] = 0.0
                 self.df.at[index, "Total Quantity"] = 0.0
-                # self.df.at[index, "Total Value"] = 0.0
                 self.df.at[index, "Average Price"] = 0.0
                 self.df.at[index, "Last avgFillPrice"] = None
                 self.df.at[index, "Last filled"] = None
-                # self.df.at[index, "Last Amount"] = None
                 self.df.at[index, "Last Date"] = dt.now() - td(
                     days=30
                 )  # init the date to be 30 days ago

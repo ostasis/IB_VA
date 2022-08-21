@@ -11,6 +11,8 @@
 
 # if the files to be tracked are in subdirectories
 !*Samples/algo-101-04-01.py
+!*Samples/index.py
+!*Samples/templates/*
 
 
 

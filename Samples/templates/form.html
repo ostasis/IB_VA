@@ -1,0 +1,30 @@
+<html>
+
+<body>
+    <form action="/data" method="POST">
+        <p>Amount to invest <input type="number" name="Amount to invest" min=0 max=5000 step=100 value=2500 /></p>
+        <label for="weekday">Choose a day to invest:</label>
+        <select name="weekday" id="weekday">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+        </select>
+        <br>
+        <label for="interval">Choose recurring interval:</label>
+        <select name="interval" id="interval">
+            <!--<option value="Seconds">Seconds</option>
+            <option value="Minutes">Minutes</option>/-->
+            <option value="Weekly">Weekly</option>
+            <option value="Fortnightly">Fortnightly</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Quarterly">Quarterly</option>
+        </select>
+        <p><input type="submit" value="Submit" /></p>
+    </form>
+</body>
+
+</html>
