@@ -402,12 +402,12 @@ def dummyfn():
             )  # delta.seconds (switch to delta.seconds for testing in Paper Trading)
             weekday = d1.strftime("%A")
 
-            if not (
-                d1.day >= 10
+            if not (  # invest on every Monday at 11am
+                d1.day >= 1
                 and (weekday == "Monday")
                 and d1.hour >= 11
                 and delta_check
-                >= 21  # >= 21 days, change to 5*60 if using delta.seconds in Paper Trading to run every 5 minutes.
+                >= 7  # change to 5*60 if using delta.seconds in Paper Trading to run every 5 minutes.
             ):
                 continue
             else:
@@ -500,7 +500,7 @@ def dummyfn():
                         index, "Actual Amount"
                     ]
 
-                if not d1.month == 8:  # rebalance in this month
+                if not d1.month == 7:  # rebalance in this month
                     app.df.at[index, "Target Amount"] += row["Weight"] * app.amount
                 else:
                     app.df.at[index, "Target Amount"] = (
