@@ -1,5 +1,18 @@
 from flask import Flask, render_template, request
 
+
+class Test:
+    def __init__(self) -> None:
+        self.amount = 1000
+
+
+app = Test()
+
+
+def do_something_now():
+    print("your shitting me")
+
+
 flask_app = Flask(__name__)
 
 
@@ -7,14 +20,6 @@ flask_app = Flask(__name__)
 @flask_app.route("/form")
 def form():
     return render_template("form.html")
-
-
-class Test:
-    def __init__(self) -> None:
-        self.amount = 1000
-
-
-test = Test()
 
 
 @flask_app.route("/data", methods=["POST", "GET"])
@@ -30,12 +35,15 @@ def data():
             print(x)
             print(form_data.to_dict()[x])
             if x == "Amount":
-                test.amount = form_data.to_dict()[x]
+                app.amount = form_data.to_dict()[x]
 
-        print(test.amount)
+        print(app.amount)
+
+        do_something_now()
 
         return render_template("data.html", form_data=form_data)
 
 
 if __name__ == ("__main__"):
     flask_app.run(debug=True)
+

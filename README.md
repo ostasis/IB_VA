@@ -12,6 +12,7 @@ This "Sample" python script is designed to invest at set interval using [value a
 - No GUI
 - Both TWS and the IB Gateway require daily restarts to refresh data and therefor will require you to login (if you're only investing monthly this isn't an issue)
 - At this stage it uses [```MarketDataType 4```](https://interactivebrokers.github.io/tws-api/market_data_type.html); Delayed Frozen. Requests delayed "frozen" data for a user without market data subscriptions.
+- Be sure to execute ```~/IBJts/samples/Python/Samples/alog-101-04-01.py``` from the same directory everytime; usually ```~/IBJts/samples/Python```, as this is the directory where the ```portfolioa.xlsx``` is saved.
 
 ## Contributing
 
