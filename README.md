@@ -10,9 +10,10 @@ This "Sample" python script is designed to invest at set interval using [value a
 - No code included to easily switch between Trading Account and Paper Trading
 - No code to switch between DCA and Value Averaging
 - No GUI
+- No stop loss functionality
 - Both TWS and the IB Gateway require daily restarts to refresh data and therefor will require you to login (if you're only investing monthly this isn't an issue)
 - At this stage it uses [```MarketDataType 4```](https://interactivebrokers.github.io/tws-api/market_data_type.html); Delayed Frozen. Requests delayed "frozen" data for a user without market data subscriptions.
-- Be sure to execute ```~/IBJts/samples/Python/Samples/alog-101-04-01.py``` from the same directory everytime; usually ```~/IBJts/samples/Python```, as this is the directory where the ```portfolioa.xlsx``` is saved.
+- Be sure to execute ```~/IBJts/samples/Python/Samples/algo-101-04-01.py``` from the same directory everytime; usually ```~/IBJts/samples/Python```, as this is the directory where the ```portfolio.xlsx``` is saved.
 
 ## Contributing
 
@@ -53,7 +54,7 @@ if not (
 
 6. Check out the API user guide and ensure you [enable API connections](https://interactivebrokers.github.io/tws-api/initial_setup.html).
 
-7. The final step is to have TWS running in Paper Trading mode before executing ```~/IBJts/samples/Python/Samples/alog-101-04-01.py```.
+7. The final step is to have TWS running in Paper Trading mode before executing ```~/IBJts/samples/Python/Samples/algo-101-04-01.py```.
 
 8. Once you're satisfied with the results try actual trading **at your own risk, see LICENCE**.
 
