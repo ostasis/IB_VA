@@ -2,14 +2,14 @@
 
 ## Description
 
-This "Sample" python script is designed to invest at set interval using [value averaging](https://www.investopedia.com/terms/v/value_averaging.asp) investing strategy. (Note this is done manually by running the script with IBKR TWS open).
+The "Samples" python script is designed to invest at set interval using [value averaging](https://www.investopedia.com/terms/v/value_averaging.asp) investing strategy. (Note this is done manually by running the script with IBKR TWS open).
 
 ## Limitations
 
 - Using ASX stocks i.e. Australian (which you can edit)
 - No code to switch between DCA and Value Averaging
 - No stop loss functionality
-- NO error capture or logging
+- No error capture or logging
 - Both TWS and the IB Gateway require daily restarts to refresh data and therefor will require you to login (if you're only investing monthly this isn't an issue)
 - At this stage it uses [```MarketDataType 4```](https://interactivebrokers.github.io/tws-api/market_data_type.html); Delayed Frozen. Requests delayed "frozen" data for a user without market data subscriptions.
 
