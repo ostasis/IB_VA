@@ -352,8 +352,8 @@ def summary():
     return
 
 
-def dummyfn():
-    global global_recurring_interval, global_minimum_amount, global_recurring_amount
+def dummyfn(recurring_interval=28, minimum_amount=700, recurring_amount=3250):
+    # global global_recurring_interval, global_minimum_amount, global_recurring_amount
 
     # Check if the API is connected via orderid
     while True:
@@ -391,7 +391,7 @@ def dummyfn():
                 and weekday == "Tuesday"
                 and d1.hour >= 11
                 and delta_check
-                >= global_recurring_interval  # change to 5*60 if using delta.seconds in Paper Trading to run every 5 minutes.
+                >= recurring_interval  # change to 5*60 if using delta.seconds in Paper Trading to run every 5 minutes.
             ):
                 continue
             else:
@@ -485,12 +485,12 @@ def dummyfn():
 
                 if not d1.month == 7:  # rebalance in this month
                     app.df.at[index, "Target Amount"] += (
-                        row["Weight"] * global_recurring_amount
+                        row["Weight"] * recurring_amount
                     )
                 else:
                     app.df.at[index, "Target Amount"] = (
                         sum_target_amount * row["Weight"]
-                    ) + (row["Weight"] * global_recurring_amount)
+                    ) + (row["Weight"] * recurring_amount)
 
                 # for DCA could change amount_delta to DCA amount here, crude but would work.
                 amount_delta = (
@@ -519,7 +519,7 @@ def dummyfn():
                     order.action = "SELL"
 
                 # fees approx. $7 per trade therefor let amount_delta build up to greater than $700 to pay 1% fees.
-                if amount_delta < global_minimum_amount:
+                if amount_delta < minimum_amount:
                     print(app.df)
                     continue
 
@@ -550,10 +550,6 @@ def dummyfn():
 """WARNING: MAKE SURE YOU UNDERSTAND THE RISKS AND DIFFERNCES BETWEEN 7496 Trading Account & 7497 Paper Account"""
 app = IBapi()
 
-global_recurring_interval = 28
-global_minimum_amount = 700
-global_recurring_amount = 3250
-
 
 def invest(port=7497, recurring_interval=28, minimum_amount=700, recurring_amount=3250):
 
@@ -564,13 +560,12 @@ def invest(port=7497, recurring_interval=28, minimum_amount=700, recurring_amoun
     app.nextorderId = None
 
     # Start the socket in a thread
-    api_thread = threading.Thread(target=run_loop, daemon=True)
+    api_thread = threading.Thread(
+        target=run_loop,
+        daemon=True,
+        args=(recurring_interval, minimum_amount, recurring_amount,),
+    )
     api_thread.start()
-
-    global global_recurring_interval, gloabl_minimum_amount, global_recurring_amount
-    global_recurring_interval = recurring_interval
-    gloabl_minimum_amount = minimum_amount
-    global_recurring_amount = recurring_amount
 
     timer = RepeatTimer(60, dummyfn)  # keep connection alive every 60 seconds
     timer.start()
