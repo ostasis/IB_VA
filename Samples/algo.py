@@ -86,9 +86,6 @@ class IBapi(EWrapper, EClient):
             '############## app.connect("127.0.0.1", 7497, 1)  # 7496 Trading Account & 7497 Paper Account  ##############'
         )
         print(
-            "############## delta.seconds, is useful for testing under paper trading.   ##############"
-        )
-        print(
             "############## YOU HAVE 60 SECONDS TO CANCEL, TEST IN PAPER TRADING FIRST. ##############"
         )
 
@@ -381,17 +378,16 @@ def dummyfn(recurring_interval=28, minimum_amount=700, recurring_amount=3250):
             d0 = app.df.at[index, "Last Date"]  # app.buy_time
             d1 = current_time
             delta = d1 - d0
-            delta_check = (
-                delta.days
-            )  # delta.seconds (switch to delta.seconds for testing in Paper Trading)
+            delta_check = delta.days
             weekday = d1.strftime("%A")
 
-            if not (  # invest on every Monday at 11am
+            if not (  # you can add your own restrictions in here i.e. invest after the 10th on every Monday after 11am
                 d1.day >= 10
-                and weekday == "Tuesday"
+                and weekday == "Monday"
                 and d1.hour >= 11
                 and delta_check
-                >= recurring_interval  # change to 5*60 if using delta.seconds in Paper Trading to run every 5 minutes.
+                # delta_check
+                >= recurring_interval
             ):
                 continue
             else:
@@ -560,14 +556,12 @@ def invest(port=7497, recurring_interval=28, minimum_amount=700, recurring_amoun
     app.nextorderId = None
 
     # Start the socket in a thread
-    api_thread = threading.Thread(
-        target=run_loop,
-        daemon=True,
-        args=(recurring_interval, minimum_amount, recurring_amount,),
-    )
+    api_thread = threading.Thread(target=run_loop, daemon=True,)
     api_thread.start()
 
-    timer = RepeatTimer(60, dummyfn)  # keep connection alive every 60 seconds
+    timer = RepeatTimer(
+        60, dummyfn, (recurring_interval, minimum_amount, recurring_amount)
+    )  # keep connection alive every 60 seconds
     timer.start()
     time.sleep(20 * 60 * 60)  # will run for 20 hours
     timer.cancel()
