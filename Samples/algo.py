@@ -30,14 +30,21 @@ class IBapi(EWrapper, EClient):
             [], columns=["reqId", "Account", "Tag", "Value", "Currency"]
         )
 
+    # https://algotrading101.com/learn/interactive-brokers-python-api-native-guide/
+
+    def accountType(self, port):
         """ my stuff, fingers crossed """
 
-        self.amount = 3500  # amount to invest monthly
+        # self.amount = 3500  # amount to invest monthly
         # self.filled = False
 
-        self.Cushion = 1.0
+        # self.Cushion = 1.0
+        if port == 7497:
+            self.acc_type = "portfolio_paper_account.xlsx"
+        else:
+            self.acc_type = "portfolio.xlsx"
 
-        if not os.path.exists("portfolio.xlsx"):
+        if not os.path.exists(os.path.abspath(r"" + self.acc_type + "")):
             # change symbols and weightings to your preferences below
             # once portfolio.xlsx is generated the first time this will be ignored and changes will need to be made directly.
             # Note this requires having index/symbol, Weight and Last Date filled in
@@ -60,17 +67,17 @@ class IBapi(EWrapper, EClient):
                 self.df.at[index, "Last Date"] = dt.now() - td(
                     days=30
                 )  # init the date to be 30 days ago
+            self.df.to_excel(self.acc_type)
         else:
-            self.df = pd.read_excel("portfolio.xlsx", index_col=0)
+            self.df = pd.read_excel(self.acc_type, index_col=0)
             # self.df.convert_dtypes(convert_floating=True)
             self.df.to_excel(
-                f"portfolio_{dt.now().year}_{dt.now().month}_{dt.now().day}.xlsx"
+                f"{self.acc_type.replace('.xlsx', '')}_{dt.now().year}_{dt.now().month}_{dt.now().day}_{dt.now().hour}_{dt.now().minute}_{dt.now().second}.xlsx"
             )
+            print(self.df)
         pd.set_option("display.max_columns", None)
 
-    """ end my stuff, fingers crossed """
-
-    # https://algotrading101.com/learn/interactive-brokers-python-api-native-guide/
+        """ end my stuff, fingers crossed """
 
     def nextValidId(self, orderId: int):
         super().nextValidId(orderId)
@@ -123,7 +130,7 @@ class IBapi(EWrapper, EClient):
             self.df.at[index, "Last filled"] = filled
             # self.df.at[index, "Last Amount"] = filled * avgFillPrice
             # self.filled = True
-        self.df.to_excel("portfolio.xlsx")
+        self.df.to_excel(self.acc_type)
 
     def openOrder(self, orderId, contract, order, orderState):
         print(
@@ -217,7 +224,7 @@ class IBapi(EWrapper, EClient):
         if tickType == 75:  # 9:
             self.df.at[self.df.index[reqId - 1], "Close_Price"] = price
 
-        self.df.to_excel("portfolio.xlsx")
+        self.df.to_excel(self.acc_type)
 
     def tickSize(self, reqId, tickType, size):
         print(
@@ -299,16 +306,6 @@ def liquidate_all_positions():
         app.cancelOrder(app.nextorderId)
 """
 
-"""WARNING: MAKE SURE YOU UNDERSTAND THE RISKS AND DIFFERNCES BETWEEN 7496 Trading Account & 7497 Paper Account"""
-app = IBapi()
-app.connect("127.0.0.1", 7496, 7)  # 7496 Trading Account & 7497 Paper Account
-
-app.nextorderId = None
-
-# Start the socket in a thread
-api_thread = threading.Thread(target=run_loop, daemon=True)
-api_thread.start()
-
 
 def summary():
     tags = [
@@ -356,6 +353,7 @@ def summary():
 
 
 def dummyfn():
+    global global_recurring_interval, global_minimum_amount, global_recurring_amount
 
     # Check if the API is connected via orderid
     while True:
@@ -390,14 +388,13 @@ def dummyfn():
 
             if not (  # invest on every Monday at 11am
                 d1.day >= 10
-                and (weekday == "Monday")
+                and weekday == "Tuesday"
                 and d1.hour >= 11
                 and delta_check
-                >= 21  # change to 5*60 if using delta.seconds in Paper Trading to run every 5 minutes.
+                >= global_recurring_interval  # change to 5*60 if using delta.seconds in Paper Trading to run every 5 minutes.
             ):
                 continue
             else:
-
                 row_number = app.df.index.get_loc(index) + 1
 
                 if row_number == 1:
@@ -487,19 +484,22 @@ def dummyfn():
                     ]
 
                 if not d1.month == 7:  # rebalance in this month
-                    app.df.at[index, "Target Amount"] += row["Weight"] * app.amount
+                    app.df.at[index, "Target Amount"] += (
+                        row["Weight"] * global_recurring_amount
+                    )
                 else:
                     app.df.at[index, "Target Amount"] = (
                         sum_target_amount * row["Weight"]
-                    ) + (row["Weight"] * app.amount)
+                    ) + (row["Weight"] * global_recurring_amount)
 
+                # for DCA could change amount_delta to DCA amount here, crude but would work.
                 amount_delta = (
                     app.df.at[index, "Target Amount"]
                     - app.df.at[index, "Actual Amount"]
                 )
 
                 app.df.at[index, "Last Date"] = dt.now()
-                app.df.to_excel("portfolio.xlsx")
+                app.df.to_excel(app.acc_type)
                 time.sleep(1)
 
                 # Create order object
@@ -519,7 +519,7 @@ def dummyfn():
                     order.action = "SELL"
 
                 # fees approx. $7 per trade therefor let amount_delta build up to greater than $700 to pay 1% fees.
-                if amount_delta < 700:
+                if amount_delta < global_minimum_amount:
                     print(app.df)
                     continue
 
@@ -547,17 +547,43 @@ def dummyfn():
     return
 
 
-timer = RepeatTimer(60, dummyfn)  # keep connection alive every 60 seconds
-timer.start()
-time.sleep(20 * 60 * 60)  # will run for 20 hours
-timer.cancel()
+"""WARNING: MAKE SURE YOU UNDERSTAND THE RISKS AND DIFFERNCES BETWEEN 7496 Trading Account & 7497 Paper Account"""
+app = IBapi()
 
-"""WARNING: MAKE SURE YOU UNDERSTAND THE RISKS OF UNCOMMENTING THE BELOW LINE
-        Only uncomment this line in Paper Trading mode
-        This is useful if you run out of funds whilst testing
-        Do no uncommnet in Actual Trading because as it says it will liquidate all of your positions
-        Additionally you would comment out the 4 code lines above otherwise you'll be waiting 20 hours and also uncomment the function itself"""
-####### liquidate_all_positions()
+global_recurring_interval = 28
+global_minimum_amount = 700
+global_recurring_amount = 3250
 
-time.sleep(1)
-app.disconnect()
+
+def invest(port=7497, recurring_interval=28, minimum_amount=700, recurring_amount=3250):
+
+    app.accountType(port)
+
+    app.connect("127.0.0.1", port, 7)  # 7496 Trading Account & 7497 Paper Account
+
+    app.nextorderId = None
+
+    # Start the socket in a thread
+    api_thread = threading.Thread(target=run_loop, daemon=True)
+    api_thread.start()
+
+    global global_recurring_interval, gloabl_minimum_amount, global_recurring_amount
+    global_recurring_interval = recurring_interval
+    gloabl_minimum_amount = minimum_amount
+    global_recurring_amount = recurring_amount
+
+    timer = RepeatTimer(60, dummyfn)  # keep connection alive every 60 seconds
+    timer.start()
+    time.sleep(20 * 60 * 60)  # will run for 20 hours
+    timer.cancel()
+
+    """WARNING: MAKE SURE YOU UNDERSTAND THE RISKS OF UNCOMMENTING THE BELOW LINE
+            Only uncomment the line below in Paper Trading mode
+            This is useful if you run out of funds whilst testing
+            Do no uncommnet in Actual Trading because as it says it will liquidate all of your positions
+            Additionally you would comment out the 4 code lines above otherwise you'll be waiting 20 hours"""
+    ####### liquidate_all_positions()
+
+    time.sleep(1)
+    app.disconnect()
+
