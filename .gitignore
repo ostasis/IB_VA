@@ -11,8 +11,8 @@
 !*/
 
 # if the files to be tracked are in subdirectories
-!*Samples/algo.py
-!*Samples/tkinter-app.py
+!*/Samples/algo.py
+!*/Samples/tkinter-app.py
 
 # Ignore .gitignore in Testbed
 *Testbed/.gitignore
