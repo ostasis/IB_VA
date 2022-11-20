@@ -46,7 +46,7 @@ class IBapi(EWrapper, EClient):
 
         if not os.path.exists(os.path.abspath(r"" + self.acc_type + "")):
             # change symbols and weightings to your preferences below
-            # once portfolio.xlsx is generated the first time this will be ignored and changes will need to be made directly.
+            # once portfolio.xlsx is generated the first time this will be ignored and changes will need to be made directly in the .xlsx.
             # Note this requires having index/symbol, Weight and Last Date filled in
             self.symbols = {
                 "NDQ": {"Weight": 0.10},
@@ -70,7 +70,6 @@ class IBapi(EWrapper, EClient):
             self.df.to_excel(self.acc_type)
         else:
             self.df = pd.read_excel(self.acc_type, index_col=0)
-            # self.df.convert_dtypes(convert_floating=True)
             self.df.to_excel(
                 f"{self.acc_type.replace('.xlsx', '')}_{dt.now().year}_{dt.now().month}_{dt.now().day}_{dt.now().hour}_{dt.now().minute}_{dt.now().second}.xlsx"
             )
@@ -83,10 +82,7 @@ class IBapi(EWrapper, EClient):
         super().nextValidId(orderId)
         self.nextorderId = orderId
         print(
-            '############## app.connect("127.0.0.1", 7497, 1)  # 7496 Trading Account & 7497 Paper Account  ##############'
-        )
-        print(
-            "############## YOU HAVE 60 SECONDS TO CANCEL, TEST IN PAPER TRADING FIRST. ##############"
+            "******************* YOU HAVE 60 SECONDS TO CANCEL, TEST IN PAPER TRADING FIRST. *******************"
         )
 
         print("The next valid order id is: ", self.nextorderId)
@@ -119,14 +115,11 @@ class IBapi(EWrapper, EClient):
             "lastFillPrice",
             lastFillPrice,
         )
-        # try this out tomorrow need to add orderId to df
         index = self.df.index[self.df["orderId"] == orderId].tolist()[0]
         self.df.at[index, "Last Date"] = dt.now()
         if status == "Filled":
             self.df.at[index, "Last avgFillPrice"] = avgFillPrice
             self.df.at[index, "Last filled"] = filled
-            # self.df.at[index, "Last Amount"] = filled * avgFillPrice
-            # self.filled = True
         self.df.to_excel(self.acc_type)
 
     def openOrder(self, orderId, contract, order, orderState):
@@ -350,7 +343,6 @@ def summary():
 
 
 def dummyfn(recurring_interval=28, minimum_amount=700, recurring_amount=3250):
-    # global global_recurring_interval, global_minimum_amount, global_recurring_amount
 
     # Check if the API is connected via orderid
     while True:
@@ -369,13 +361,9 @@ def dummyfn(recurring_interval=28, minimum_amount=700, recurring_amount=3250):
     ].sum()  # sum of target amount for rebalance month
 
     for index, row in app.df.iterrows():
-        if (
-            current_time is not None
-            and app.df.at[index, "Last Date"] is not None
-            # and row["Weight"] > 0.0
-        ):
+        if current_time is not None and app.df.at[index, "Last Date"] is not None:
 
-            d0 = app.df.at[index, "Last Date"]  # app.buy_time
+            d0 = app.df.at[index, "Last Date"]
             d1 = current_time
             delta = d1 - d0
             delta_check = delta.days
@@ -385,9 +373,7 @@ def dummyfn(recurring_interval=28, minimum_amount=700, recurring_amount=3250):
                 d1.day >= 10
                 and weekday == "Monday"
                 and d1.hour >= 11
-                and delta_check
-                # delta_check
-                >= recurring_interval
+                and delta_check >= recurring_interval
             ):
                 continue
             else:
@@ -426,19 +412,19 @@ def dummyfn(recurring_interval=28, minimum_amount=700, recurring_amount=3250):
                         or np.isnan(app.df.at[index, "Ask_Price"])
                     ):
                         price = app.df.at[index, "Ask_Price"]
-                        print("###### ask ######")
+                        print("******** ask ********")
                     elif not (
                         app.df.at[index, "Last_Price"] == -1
                         or np.isnan(app.df.at[index, "Last_Price"])
                     ):
                         price = app.df.at[index, "Last_Price"]
-                        print("###### last ######")
+                        print("******** last ********")
                     elif not (
                         app.df.at[index, "Close_Price"] == -1
                         or np.isnan(app.df.at[index, "Close_Price"])
                     ):
                         price = app.df.at[index, "Close_Price"]
-                        print("###### close ######")
+                        print("******** close ********")
                     else:
                         print("no price available")
                         continue
