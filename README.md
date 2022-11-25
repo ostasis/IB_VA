@@ -36,13 +36,13 @@ To any of the above limitations.
 
 7. Before trying actual trading please review the following lines 372-278 in ```~/IBJts/samples/Python/Samples/alog.py``` see below:
 
-            ```if not (  # you can add your own restrictions in here i.e. invest after the 10th on every Monday after 11am
+            if not (  # you can add your own restrictions in here i.e. invest after the 10th on every Monday after 11am
                 # d1.day >= 10
                 # and weekday == "Monday"
                 # and d1.hour >= 11
                 delta_check
                 >= recurring_interval
-            ):```
+            ):
 
 8. Once you're satisfied with the results try actual trading **at your own risk, see LICENCE**. 
 
