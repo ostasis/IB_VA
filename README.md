@@ -34,8 +34,9 @@ To any of the above limitations.
 
 6. Once you're satisfied it works try using the gui to invest from. To do this have TWS running in paper trading account and from vscode terminal ```~/IBJts/samples/Python/Samples/$ python3 tkinter-app.py```. I recommend you stay in paper trading mode.
 
-7. Before trying actual trading please review the following lines in ```~/IBJts/samples/Python/Samples/alog.py```
-```if not (  # you can add your own restrictions in here i.e. invest after the 10th on every Monday after 11am
+7. Before trying actual trading please review the following lines 372-278 in ```~/IBJts/samples/Python/Samples/alog.py``` see below:
+
+            ```if not (  # you can add your own restrictions in here i.e. invest after the 10th on every Monday after 11am
                 # d1.day >= 10
                 # and weekday == "Monday"
                 # and d1.hour >= 11
@@ -43,7 +44,7 @@ To any of the above limitations.
                 >= recurring_interval
             ):```
 
-7. Once you're satisfied with the results try actual trading **at your own risk, see LICENCE**. 
+8. Once you're satisfied with the results try actual trading **at your own risk, see LICENCE**. 
 
 
 
