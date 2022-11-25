@@ -4,6 +4,13 @@
 
 The "Samples" python script is designed to invest at set interval using [value averaging](https://www.investopedia.com/terms/v/value_averaging.asp) investing strategy. (Note this is done manually by running the script with IBKR TWS open).
 
+## Reason
+
+- IBKR margin rates are good
+- A lot of trading platform API's don't work in Australia
+- QuantConnect for example doesn't recognise ASX shares
+- Other just aren't available at all in Australia for example TD Ameritrade, Alpaca
+
 ## Limitations
 
 - Using ASX stocks i.e. Australian (which you can edit)
