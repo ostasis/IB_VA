@@ -10,6 +10,7 @@ The "Samples" python script is designed to invest at set interval using [value a
 - A lot of trading platform API's don't work in Australia
 - QuantConnect for example doesn't recognise ASX shares
 - Other just aren't available at all in Australia for example TD Ameritrade, Alpaca
+- I use this myself to invest monthly using VA strategy
 
 ## Limitations
 
