@@ -7,9 +7,9 @@ The "Samples" python script is designed to invest at set interval using [value a
 ## Reason
 
 - IBKR margin rates are good
-- A lot of trading platform API's don't work in Australia
-- QuantConnect for example doesn't recognise ASX shares
-- Other just aren't available at all in Australia for example TD Ameritrade, Alpaca
+- A lot of trading platform API's don't work for Australia shares
+- QuantConnect for example doesn't recognise ASX shares when live trading with Interactive Brokers
+- Other examples are TD Ameritrade and Alpaca
 - I use this myself to invest monthly using VA strategy
 
 ## Limitations
@@ -20,6 +20,7 @@ The "Samples" python script is designed to invest at set interval using [value a
 - No error capture or logging
 - Both TWS and the IB Gateway require daily restarts to refresh data and therefor will require you to login (if you're only investing monthly this isn't an issue)
 - At this stage it uses [```MarketDataType 4```](https://interactivebrokers.github.io/tws-api/market_data_type.html); Delayed Frozen. Requests delayed "frozen" data for a user without market data subscriptions.
+- I would like to see if someone could create a pinescript for Trading View to do the same thing.
 
 
 ## Contributing
