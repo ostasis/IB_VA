@@ -370,10 +370,11 @@ def dummyfn(recurring_interval=28, minimum_amount=700, recurring_amount=3250):
             weekday = d1.strftime("%A")
 
             if not (  # you can add your own restrictions in here i.e. invest after the 10th on every Monday after 11am
-                d1.day >= 10
-                and weekday == "Monday"
-                and d1.hour >= 11
-                and delta_check >= recurring_interval
+                # d1.day >= 10
+                # and weekday == "Monday"
+                # and d1.hour >= 11
+                delta_check
+                >= recurring_interval
             ):
                 continue
             else:
