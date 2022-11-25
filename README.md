@@ -10,16 +10,16 @@ The "Samples" python script is designed to invest at set interval using [value a
 - A lot of trading platform API's don't work for Australia shares
 - QuantConnect for example doesn't recognise ASX shares when live trading with Interactive Brokers
 - Other examples are TD Ameritrade and Alpaca
-- I use this myself to invest monthly using VA strategy
+- I use this myself to invest monthly using [value averaging](https://www.investopedia.com/terms/v/value_averaging.asp) strategy
 
 ## Limitations
 
-- Using ASX stocks i.e. Australian (which you can edit)
+- Using ASX stocks i.e. Australian. (You can edit in lines 52-56 in ```~/IBJts/samples/Python/Samples/alog.py``` to change this)
 - No code to switch between DCA and Value Averaging
 - No stop loss functionality
 - No error capture or logging
 - Both TWS and the IB Gateway require daily restarts to refresh data and therefor will require you to login (if you're only investing monthly this isn't an issue)
-- At this stage it uses [```MarketDataType 4```](https://interactivebrokers.github.io/tws-api/market_data_type.html); Delayed Frozen. Requests delayed "frozen" data for a user without market data subscriptions.
+- At this stage it uses [```MarketDataType 4```](https://interactivebrokers.github.io/tws-api/market_data_type.html); Delayed Frozen. Requests delayed "frozen" data for a user without market data subscriptions. (You can edit ```tickType ==``` on multiple lines in ```~/IBJts/samples/Python/Samples/alog.py``` under ```def tickPrice(self, reqId, tickType, price, attrib):``` to change to live data)
 - I would like to see if someone could create a pinescript for Trading View to do the same thing.
 
 

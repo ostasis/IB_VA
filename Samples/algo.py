@@ -183,7 +183,7 @@ class IBapi(EWrapper, EClient):
             price,
             end="\n",
         )
-
+        # note all the commented out numbers below are for live trading equivalents
         if tickType == 69:  # 0:
             self.df.at[self.df.index[reqId - 1], "Bid_Size"] = price
 
